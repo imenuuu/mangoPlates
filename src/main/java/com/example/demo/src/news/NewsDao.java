@@ -34,7 +34,7 @@ public class NewsDao {
         }
         String getNewsQuery = String.format("select Review.id as 'reviewId',Users.profileImgUrl,Users.name,isHolic," +
                 "       (select count(Re.review) from Review Re where Re.userId=Users.id)'reviewCount',\n" +
-                "       (select count(follwedUserId) from Following where follwedUserId=Review.userId)'followCount',evaluation,Stores.id as 'storeId',\n" +
+                "       (select count(follwedUserId) from Following where follwedUserId=Users.id)'followCount',evaluation,Stores.id as 'storeId',\n" +
                 "       concat('@ ',Stores.name,' - ',Stores.subRegion)'storeName',review,\n" +
                 "       case when YEAR(Review.createdAt)<YEAR(now())\n" +
                 "                    then concat(YEAR(Review.createdAt),'년 ',MONTH(Review.createdAt),'월 ',DAY(Review.createdAt),'일')\n" +

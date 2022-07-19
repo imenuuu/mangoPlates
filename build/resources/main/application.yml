@@ -7,9 +7,31 @@ spring:
 
   datasource:
     platform: mysql
-    url: jdbc:mysql://mangoplatedb.c3wb4ttnr1qr.ap-northeast-2.rds.amazonaws.com/mangoPlateDev?autoReconnect=true # 변경해주세요
-    username : admin
-    password: mango123 # 변경해주세요
+    url: jdbc:mysql://chatting.cx3635ohpt8d.ap-northeast-2.rds.amazonaws.com/mangoPlateDev?autoReconnect=true # 변경해주세요
+    username : root
+    password: chat1234 # 변경해주세요
 
     driver-class-name: com.mysql.cj.jdbc.Driver # mysql 8버전
+
     # driver-class-name: com.mysql.jdbc.Driver # mysql 5버전
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

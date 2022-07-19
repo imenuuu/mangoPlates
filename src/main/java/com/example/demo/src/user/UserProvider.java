@@ -4,6 +4,7 @@ package com.example.demo.src.user;
 import com.example.demo.config.BaseException;
 import com.example.demo.src.store.StoreDao;
 import com.example.demo.src.user.model.*;
+import com.example.demo.src.user.repository.UserRepository;
 import com.example.demo.utils.JwtService;
 import com.example.demo.utils.SHA256;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.demo.config.BaseResponseStatus.*;
 
@@ -23,15 +25,17 @@ public class UserProvider {
     private final UserDao userDao;
     private final StoreDao storeDao;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public UserProvider(UserDao userDao, JwtService jwtService, StoreDao storeDao) {
+    public UserProvider(UserDao userDao, JwtService jwtService, StoreDao storeDao, UserRepository userRepository) {
         this.userDao = userDao;
         this.storeDao = storeDao;
         this.jwtService = jwtService;
+        this.userRepository = userRepository;
     }
 
     public List<GetUserRes> getUsers() throws BaseException {
@@ -267,7 +271,7 @@ public class UserProvider {
 
     @Transactional(rollbackOn = BaseException.class)
     public GetMylistRes getMylist(Long userId, Long mylistId) throws BaseException {
-        if(storeDao.checkMylistId(mylistId) == 0){
+        if (storeDao.checkMylistId(mylistId) == 0) {
             throw new BaseException(NON_EXIST_MYLIST);
         }
         try {
@@ -294,6 +298,8 @@ public class UserProvider {
     }
 
 
-
+    public List<GetUserListRes> getAllUsers() throws BaseException {
+        return userRepository.findAllDesc().stream().map(GetUserListRes::new).collect(Collectors.toList());
+    }
 }
 

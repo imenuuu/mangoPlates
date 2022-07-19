@@ -9,6 +9,9 @@ import com.example.demo.config.BaseResponse;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -63,6 +66,16 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    @ResponseBody
+    @GetMapping("/all")
+    public ResponseEntity<List<GetUserListRes>> getAllUsers(Model model) throws BaseException {
+            System.out.println(model.addAttribute("users", userProvider.getAllUsers()));
+            List<GetUserListRes> user=userProvider.getAllUsers();
+            return new ResponseEntity<List<GetUserListRes>>(user, HttpStatus.OK);
+
+    }
+
 
     /**
      * 회원가입 API
