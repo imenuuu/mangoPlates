@@ -1,3 +1,5 @@
+# 본 템플릿은 (주) 소프트스퀘어드 소유입니다. 무단 복제 및 배포를 금합니다.
+
 # mangoplate_server_woody_austin
 
 ## Woody 개발일지
